@@ -1,0 +1,10 @@
+﻿global using CommunityToolkit.Mvvm.ComponentModel;
+global using MauiApp1.Models;
+global using MauiApp1.Services;
+global using MauiApp1.ViewModels;
+global using MauiApp1.Pages;
+global using System;
+global using System.Collections.ObjectModel;
+global using CommunityToolkit.Mvvm.Input;
+global using CommunityToolkit.Maui.Alerts;
+global using CommunityToolkit.Maui.Core;

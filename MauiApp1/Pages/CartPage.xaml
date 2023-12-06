@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiApp1.Pages.CartPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:MauiApp1.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:MauiApp1.ViewModels"
+    Title="Cart"
+    x:DataType="vm:CartViewModel"
+    BackgroundColor="PaleGoldenrod">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding ClearCartCommand}" Text="Clear cart" />
+    </ContentPage.ToolbarItems>
+    <Grid>
+        <ScrollView>
+            <CollectionView ItemsSource="{Binding Items}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Pizza">
+                        <Border
+                            Padding="10"
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 15"
+                            StrokeThickness="0">
+                            <Grid ColumnDefinitions="25, auto, 50, *, 80, 25">
+                                <Label
+                                    Grid.Column="0"
+                                    FontAttributes="Bold"
+                                    FontSize="18"
+                                    HorizontalOptions="Center"
+                                    Text="{Binding CartQuantity}"
+                                    TextColor="Black"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Grid.Column="1"
+                                    HorizontalOptions="Center"
+                                    Text="x"
+                                    VerticalOptions="Center" />
+                                <Image
+                                    Grid.Column="2"
+                                    HeightRequest="25"
+                                    HorizontalOptions="Center"
+                                    Source="{Binding Image}"
+                                    VerticalOptions="Center"
+                                    WidthRequest="25" />
+                                <VerticalStackLayout
+                                    Grid.Column="3"
+                                    Spacing="2"
+                                    VerticalOptions="Center">
+                                    <Label Text="{Binding Name}" TextColor="Black" />
+                                    <Label Text="{Binding Price, StringFormat='${0:N2}'}" TextColor="Black" />
+                                </VerticalStackLayout>
+
+                                <Label
+                                    Grid.Column="4"
+                                    FontAttributes="Bold"
+                                    FontSize="15"
+                                    HorizontalOptions="Center"
+                                    Text="{Binding Amount, StringFormat='${0:N2}'}"
+                                    TextColor="Black"
+                                    VerticalOptions="Center" />
+                                <Image
+                                    Grid.Column="5"
+                                    HeightRequest="25"
+                                    HorizontalOptions="End"
+                                    Source="trash.png"
+                                    VerticalOptions="Center"
+                                    WidthRequest="25">
+                                    <Image.Behaviors>
+                                        <toolkit:IconTintColorBehavior TintColor="Red" />
+                                    </Image.Behaviors>
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:CartViewModel}}, Path=RemoveCartItemCommand}" CommandParameter="{Binding Name}" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                        <BoxView HeightRequest="100" Color="Transparent" />
+                        <Label
+                            FontSize="25"
+                            HorizontalTextAlignment="Center"
+                            Text="No pizzas found"
+                            TextColor="Gray" />
+                        <!--<Button
+    Background="Goldenrod"
+    Clicked="Button_Clicked"
+    HorizontalOptions="Center"
+    Text="Explore all pizzas" />-->
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </ScrollView>
+        <Border
+            Margin="5"
+            Padding="10"
+            BackgroundColor="DarkGoldenrod"
+            StrokeShape="RoundRectangle 40"
+            StrokeThickness="0"
+            VerticalOptions="End">
+            <Grid ColumnDefinitions="*, *">
+                <Label
+                    Grid.Column="0"
+                    Padding="18,0"
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    Text="{Binding TotalAmount, StringFormat='${0:N2}'}"
+                    TextColor="White"
+                    VerticalOptions="Center" />
+                <Button
+                    Grid.Column="1"
+                    Margin="0,20"
+                    Padding="25,10"
+                    BackgroundColor="Goldenrod"
+                    Command="{Binding PlaceOrderCommand}"
+                    CornerRadius="22"
+                    HorizontalOptions="End"
+                    Text="Place Order"
+                    VerticalOptions="Center" />
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

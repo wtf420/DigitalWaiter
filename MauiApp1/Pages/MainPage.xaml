@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.Pages.MainPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="DarkGoldenrod">
+
+    <Grid RowDefinitions="Auto, *, Auto"
+          Padding="15,25">
+        
+        <Label Grid.Row="0"
+               Text="Pizza World"
+               FontSize="50"
+               HorizontalOptions="Center"
+               FontAttributes="Bold"/>
+        <Image Grid.Row="1"
+               Source="pizzafull.png"
+               HeightRequest="250"
+               WidthRequest="250"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"/>
+
+        <VerticalStackLayout Grid.Row="2"
+                             Spacing="15">
+            <Label Text="The taste of Italian Pizza"
+                   FontSize="40"
+                   FontAttributes="Bold"/>
+            <Label Text="Feel the taste of mouth watering pizza from its origin country"
+                   FontSize="18"
+                   LineHeight="1.2"/>
+            <Border StrokeShape="RoundRectangle 25"
+                    StrokeThickness="0"
+                    BackgroundColor="Goldenrod"
+                    HeightRequest="50">
+                
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                </Border.GestureRecognizers>
+                <Label Text="Get Started ->"
+                       VerticalOptions="Center"
+                       FontSize="18"
+                       Padding="5, 5"/>
+                
+            </Border>
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentPage>
