@@ -18,6 +18,17 @@ namespace API.Controllers
         public FoodItemsController(FoodContext context)
         {
             _context = context;
+            //Seeding the database
+            if (_context.FoodItems.Count() == 0)
+            {
+                var seedData = new FoodItem[]
+                {
+                    new FoodItem{ Id = 1, Name = "Peppino's Pizza", IsComplete = true, Image = "pizzafull.png", Price = 100, Type = "Food"},
+                    new FoodItem{ Id = 2, Name = "Gustavo's Pizza", IsComplete = true, Image = "pizzafull.png", Price = 150, Type = "Food"}
+                };
+                _context.AddRange(seedData);
+                _context.SaveChanges();
+            }
         }
 
         // GET: api/FoodItems
@@ -88,8 +99,17 @@ namespace API.Controllers
             _context.FoodItems.Add(foodItem);
             await _context.SaveChangesAsync();
 
-            //    return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
+            //    return CreatedAtAction("GetOrderItem", new { id = OrderItem.Id }, OrderItem);
             return CreatedAtAction(nameof(GetFoodItem), new { id = foodItem.Id }, foodItem);
+        }
+
+        [HttpPost("~/InsertMultiple")]
+        public async Task<ActionResult<FoodItem>> PostFoodItem(List<FoodItem> foodItems)
+        {
+            _context.AddRange(foodItems);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetFoodItems), new { foodItems });
         }
 
         // DELETE: api/FoodItems/5

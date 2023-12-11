@@ -17,9 +17,8 @@ namespace MauiApp1.Services
 
         public async void RefreshDataAsync()
         {
-            _foodItems = new List<FoodItem>();
             var httpclient = new HttpClient();
-            var response = await httpclient.GetAsync("https://localhost:7180/api/FoodItems");
+            var response = await httpclient.GetAsync("http://localhost:5229/api/FoodItems");
             if (response.IsSuccessStatusCode)
             {
                 var data = await response.Content.ReadAsStringAsync();
@@ -28,7 +27,7 @@ namespace MauiApp1.Services
             }
         }
 
-        private static IEnumerable<FoodItem> _foodItems;
+        private static IEnumerable<FoodItem> _foodItems = new List<FoodItem>();
 
         public IEnumerable<FoodItem> GetAllFoodItems() => _foodItems;
 

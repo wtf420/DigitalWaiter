@@ -19,7 +19,7 @@
                     <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Pizza">
+                    <DataTemplate x:DataType="models:FoodItem">
                         <Border
                             Padding="10"
                             BackgroundColor="White"

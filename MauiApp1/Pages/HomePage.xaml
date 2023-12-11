@@ -86,9 +86,12 @@
                 </Label>
             </Grid>
 
-            <FlexLayout BindableLayout.ItemsSource="{Binding FoodItems}" Wrap="Wrap">
+            <FlexLayout
+                x:Name="FoodList"
+                BindableLayout.ItemsSource="{Binding FoodItems}"
+                Wrap="Wrap">
                 <BindableLayout.ItemTemplate>
-                    <DataTemplate x:DataType="models:Pizza">
+                    <DataTemplate x:DataType="models:FoodItem">
                         <Border
                             Margin="2"
                             Padding="0"

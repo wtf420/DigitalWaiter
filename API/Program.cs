@@ -8,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<FoodContext>(opt =>
     opt.UseInMemoryDatabase("FoodList"));
+builder.Services.AddDbContext<OrderContext>(opt =>
+    opt.UseInMemoryDatabase("OrderList"));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
