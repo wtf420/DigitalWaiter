@@ -8,14 +8,14 @@ namespace MauiApp1.ViewModels
 {
     public partial class HomeViewModel : ObservableObject
     {
-        private readonly PizzaService _pizzaService;
-        public HomeViewModel(PizzaService pizzaService)
+        private readonly FoodService _foodService;
+        public HomeViewModel(FoodService foodService)
         {
-            _pizzaService = pizzaService;
-            Pizzas = new(_pizzaService.GetPopularPizzas());
+            _foodService = foodService;
+            FoodItems = new(_foodService.GetAllFoodItems());
         }
 
-        public ObservableCollection<Pizza> Pizzas { get; set;}
+        public ObservableCollection<FoodItem> FoodItems { get; set;}
 
         [RelayCommand]
         private async Task GoToAllPizzasPage(bool fromSearch = false)
@@ -28,11 +28,11 @@ namespace MauiApp1.ViewModels
         }
 
         [RelayCommand]
-        private async Task GoToDetailsPage(Pizza pizza)
+        private async Task GoToDetailsPage(FoodItem foodItem)
         {
             var parameters = new Dictionary<string, object>
             {
-                [nameof(DetailsViewModel.Pizza)] = pizza
+                [nameof(DetailsViewModel.FoodItem)] = foodItem
             };
             await Shell.Current.GoToAsync(nameof(DetailPage), animate: true, parameters);
         }

@@ -8,25 +8,25 @@ namespace MauiApp1.ViewModels
 {
     public partial class CartViewModel : ObservableObject
     {
-        public event EventHandler<Pizza> CartItemRemoved;
-        public event EventHandler<Pizza> CartItemUpdated;
+        public event EventHandler<FoodItem> CartItemRemoved;
+        public event EventHandler<FoodItem> CartItemUpdated;
         public event EventHandler CartCleared;
-        public ObservableCollection<Pizza> Items { get; set; } = new();
+        public ObservableCollection<FoodItem> Items { get; set; } = new();
 
         [ObservableProperty]
         private double _totalAmount;
         private void RecalculateTotalAmount() => TotalAmount = Items.Sum(i => i.Amount);
         [RelayCommand]
-        private void UpdateCartItem(Pizza pizza)
+        private void UpdateCartItem(FoodItem foodItem)
         {
-            var item = Items.FirstOrDefault(i => i.Name == pizza.Name);
+            var item = Items.FirstOrDefault(i => i.Name == foodItem.Name);
             if (item != null)
             {
-                item.CartQuantity = pizza.CartQuantity;
+                item.CartQuantity = foodItem.CartQuantity;
             }
             else
             {
-                Items.Add(pizza.Clone());
+                Items.Add(foodItem.Clone());
             }
             RecalculateTotalAmount();
         }

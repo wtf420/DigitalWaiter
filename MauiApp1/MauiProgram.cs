@@ -30,7 +30,7 @@ public static class MauiProgram
 
 	private static IServiceCollection AddPizzaServices(IServiceCollection services)
 	{
-		services.AddSingleton<PizzaService>();
+		services.AddSingleton<FoodService>();
 		services.AddSingleton<HomePage>().AddSingleton<HomeViewModel>();
 		services.AddTransientWithShellRoute<AllPizzasPage, AllPizzasViewModel>(nameof(AllPizzasPage));
         services.AddTransientWithShellRoute<DetailPage, DetailsViewModel>(nameof(DetailPage));

@@ -10,13 +10,13 @@ namespace MauiApp1.ViewModels
     [QueryProperty(nameof(FromSearch), nameof(FromSearch))]
     public partial class AllPizzasViewModel: ObservableObject
     {
-        private readonly PizzaService _pizzaService;
-        public AllPizzasViewModel(PizzaService pizzaService)
+        private readonly FoodService _foodService;
+        public AllPizzasViewModel(FoodService foodService)
         {
-            _pizzaService = pizzaService;
-            Pizzas = new(_pizzaService.GetAllPizzas());
+            _foodService = foodService;
+            FoodItems = new(_foodService.GetAllFoodItems());
         }
-        public ObservableCollection<Pizza> Pizzas { get; set; }
+        public ObservableCollection<FoodItem> FoodItems { get; set; }
 
         [ObservableProperty]
         private bool _fromSearch;
@@ -27,21 +27,21 @@ namespace MauiApp1.ViewModels
         [RelayCommand]
         private async Task SearchPizzas(string searchTerm)
         {
-            Pizzas.Clear();
+            FoodItems.Clear();
             Searching = true;
-            foreach (var pizza in _pizzaService.SearchPizzas(searchTerm))
+            foreach (var foodItem in _foodService.SearchFoodItems(searchTerm))
             {
-                Pizzas.Add(pizza);
+                FoodItems.Add(foodItem);
             }
             Searching = false;
         }
 
         [RelayCommand]
-        private async Task GoToDetailsPage(Pizza pizza)
+        private async Task GoToDetailsPage(FoodItem foodItem)
         {
             var parameters = new Dictionary<string, object>
             {
-                [nameof(DetailsViewModel.Pizza)] = pizza
+                [nameof(DetailsViewModel.FoodItem)] = foodItem
             };
             await Shell.Current.GoToAsync(nameof(DetailPage), animate: true, parameters);
         }

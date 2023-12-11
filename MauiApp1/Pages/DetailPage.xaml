@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:vm="clr-namespace:MauiApp1.ViewModels"
-             xmlns:models="clr-namespace:MauiApp1.Models"
-             x:Class="MauiApp1.Pages.DetailPage"
-             Title=""
-             Shell.NavBarIsVisible="False"
-             BackgroundColor="White"
-             x:DataType="vm:DetailsViewModel">
+<ContentPage
+    x:Class="MauiApp1.Pages.DetailPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:MauiApp1.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:MauiApp1.ViewModels"
+    Title=""
+    x:DataType="vm:DetailsViewModel"
+    BackgroundColor="White"
+    Shell.NavBarIsVisible="False">
     <ContentPage.Behaviors>
-        <toolkit:StatusBarBehavior StatusBarColor="DarkGoldenrod"
-                               StatusBarStyle="LightContent"/>
+        <toolkit:StatusBarBehavior StatusBarColor="DarkGoldenrod" StatusBarStyle="LightContent" />
     </ContentPage.Behaviors>
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="QuantityBtn" TargetType="ImageButton">
-                <Setter Property="HeightRequest" Value="40"/>
-                <Setter Property="WidthRequest" Value="40"/>
-                <Setter Property="VerticalOptions" Value="Center"/>
-                <Setter Property="HorizontalOptions" Value="Center"/>
-                <Setter Property="Padding" Value="0"/>
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="WidthRequest" Value="40" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="Padding" Value="0" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -28,114 +28,123 @@
     <Grid>
         <ScrollView Padding="15">
             <VerticalStackLayout Spacing="15">
-                <Image Source="{Binding Pizza.Image}"
-                       HeightRequest="200"
-                       WidthRequest="200"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"/>
-                <Label Text="{Binding Pizza.Name}"
-                       FontSize="20"
-                       FontAttributes="Bold"
-                       TextColor="Black"
-                       HorizontalOptions="Center"/>
+                <Image
+                    HeightRequest="200"
+                    HorizontalOptions="Center"
+                    Source="{Binding FoodItem.Image}"
+                    VerticalOptions="Center"
+                    WidthRequest="200" />
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    Text="{Binding FoodItem.Name}"
+                    TextColor="Black" />
                 <Grid ColumnDefinitions="*, *">
-                    <Label Grid.Column="0"
-                           Text="{Binding Pizza.Price, StringFormat='${0:N2}'}"
-                           TextColor="Black"
-                           FontAttributes="Bold"
-                           FontSize="18"/>
-                    <HorizontalStackLayout Grid.Column="1"
-                           HorizontalOptions="End"
-                           Spacing="2"
-                           VerticalOptions="Center">
-                        <Label Text="4"
-                           TextColor="Black"/>
-                        <Label Text="*"
-                           TextColor="Black"/>
+                    <Label
+                        Grid.Column="0"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="{Binding FoodItem.Price, StringFormat='${0:N2}'}"
+                        TextColor="Black" />
+                    <HorizontalStackLayout
+                        Grid.Column="1"
+                        HorizontalOptions="End"
+                        Spacing="2"
+                        VerticalOptions="Center">
+                        <Label Text="4" TextColor="Black" />
+                        <Label Text="*" TextColor="Black" />
                     </HorizontalStackLayout>
                 </Grid>
-                <Label Text="Description"
-                       FontSize="15"
-                       FontAttributes="Bold"
-                       Margin="0, 10"
-                       TextColor="Black"/>
-                <Label FontSize="14"
-                       LineHeight="1.5"
-                       TextColor="Black"
-                       Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                />
+                <Label
+                    Margin="0,10"
+                    FontAttributes="Bold"
+                    FontSize="15"
+                    Text="Description"
+                    TextColor="Black" />
+                <Label
+                    FontSize="14"
+                    LineHeight="1.5"
+                    Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                    TextColor="Black" />
             </VerticalStackLayout>
         </ScrollView>
-        <Border StrokeThickness="0"
-                x:Name="bottomBox"
-                BackgroundColor="DarkGoldenrod"
-                Margin="-1"
-                VerticalOptions="End"
-                HeightRequest="150"
-                Padding="15"
-                StrokeShape="RoundRectangle 30,30, 0, 0">
+        <Border
+            x:Name="bottomBox"
+            Margin="-1"
+            Padding="15"
+            BackgroundColor="DarkGoldenrod"
+            HeightRequest="150"
+            StrokeShape="RoundRectangle 30,30, 0, 0"
+            StrokeThickness="0"
+            VerticalOptions="End">
             <Border.Shadow>
-                <Shadow Brush="Gold"
-                        Radius="100"/>
+                <Shadow Brush="Gold" Radius="100" />
             </Border.Shadow>
-            <Grid RowDefinitions="Auto, Auto"
-                  ColumnDefinitions="*, *">
-                <Label Grid.Row="0"
-                       Grid.Column="0"
-                       Text="{Binding Pizza.Amount, StringFormat='${0:N2}'}"
-                       FontSize="20"
-                       TextColor="White"
-                       FontAttributes="Bold"
-                       VerticalOptions="Center"/>
-                <Grid Grid.Row="0"
-                      Grid.Column="1"
-                      ColumnDefinitions="50, 40, 50"
-                      HorizontalOptions="End"
-                      VerticalOptions="Center">
+            <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto">
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    Text="{Binding FoodItem.Amount, StringFormat='${0:N2}'}"
+                    TextColor="White"
+                    VerticalOptions="Center" />
+                <Grid
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    ColumnDefinitions="50, 40, 50"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center">
 
-                    <ImageButton Grid.Column="0"
-                                 Source="minus.png"
-                                 Style="{StaticResource QuantityBtn}"
-                                 Command="{Binding RemoveFromCartCommand}">
+                    <ImageButton
+                        Grid.Column="0"
+                        Command="{Binding RemoveFromCartCommand}"
+                        Source="minus.png"
+                        Style="{StaticResource QuantityBtn}">
                         <ImageButton.Behaviors>
-                            <toolkit:IconTintColorBehavior TintColor="Gold"/>
+                            <toolkit:IconTintColorBehavior TintColor="Gold" />
                         </ImageButton.Behaviors>
                     </ImageButton>
-                    <Label Grid.Column="1"
-                           Text="{Binding Pizza.CartQuantity}"
-                           TextColor="White"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Center"
-                           FontSize="25"/>
-                    <ImageButton Grid.Column="2"
-                                 Source="add.png"
-                                 Style="{StaticResource QuantityBtn}"
-                                 Command="{Binding AddToCartCommand}">
+                    <Label
+                        Grid.Column="1"
+                        FontSize="25"
+                        HorizontalOptions="Center"
+                        Text="{Binding FoodItem.CartQuantity}"
+                        TextColor="White"
+                        VerticalOptions="Center" />
+                    <ImageButton
+                        Grid.Column="2"
+                        Command="{Binding AddToCartCommand}"
+                        Source="add.png"
+                        Style="{StaticResource QuantityBtn}">
                         <ImageButton.Behaviors>
-                            <toolkit:IconTintColorBehavior TintColor="Gold"/>
+                            <toolkit:IconTintColorBehavior TintColor="Gold" />
                         </ImageButton.Behaviors>
                     </ImageButton>
                 </Grid>
-                <Button Grid.Row="1"
-                        Grid.ColumnSpan="2"
-                        Text="Add to Cart"
-                        Command="{Binding ViewCartCommand}"
-                        BackgroundColor="Goldenrod"
-                        HorizontalOptions="Center"
-                        CornerRadius="22"
-                        Padding="80, 10"
-                        VerticalOptions="End"
-                        Margin="0,20"/>
+                <Button
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    Margin="0,20"
+                    Padding="80,10"
+                    BackgroundColor="Goldenrod"
+                    Command="{Binding ViewCartCommand}"
+                    CornerRadius="22"
+                    HorizontalOptions="Center"
+                    Text="Add to Cart"
+                    VerticalOptions="End" />
             </Grid>
         </Border>
 
-        <ImageButton Source="back.png"
-                     Style="{StaticResource QuantityBtn}"
-                     VerticalOptions="Start"
-                     HorizontalOptions="Start"
-                     Clicked="ImageButton_Clicked">
+        <ImageButton
+            Clicked="ImageButton_Clicked"
+            HorizontalOptions="Start"
+            Source="back.png"
+            Style="{StaticResource QuantityBtn}"
+            VerticalOptions="Start">
             <ImageButton.Behaviors>
-                <toolkit:IconTintColorBehavior TintColor="DarkGoldenrod"/>
+                <toolkit:IconTintColorBehavior TintColor="DarkGoldenrod" />
             </ImageButton.Behaviors>
         </ImageButton>
     </Grid>

@@ -1,46 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MauiApp1.Pages.MainPage"
-             Shell.NavBarIsVisible="False"
-             BackgroundColor="DarkGoldenrod">
+<ContentPage
+    x:Class="MauiApp1.Pages.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="DarkGoldenrod"
+    Shell.NavBarIsVisible="False">
 
-    <Grid RowDefinitions="Auto, *, Auto"
-          Padding="15,25">
-        
-        <Label Grid.Row="0"
-               Text="Pizza World"
-               FontSize="50"
-               HorizontalOptions="Center"
-               FontAttributes="Bold"/>
-        <Image Grid.Row="1"
-               Source="pizzafull.png"
-               HeightRequest="250"
-               WidthRequest="250"
-               VerticalOptions="Center"
-               HorizontalOptions="Center"/>
+    <Grid Padding="15,25" RowDefinitions="Auto, *, Auto">
 
-        <VerticalStackLayout Grid.Row="2"
-                             Spacing="15">
-            <Label Text="The taste of Italian Pizza"
-                   FontSize="40"
-                   FontAttributes="Bold"/>
-            <Label Text="Feel the taste of mouth watering pizza from its origin country"
-                   FontSize="18"
-                   LineHeight="1.2"/>
-            <Border StrokeShape="RoundRectangle 25"
-                    StrokeThickness="0"
-                    BackgroundColor="Goldenrod"
-                    HeightRequest="50">
-                
+        <Label
+            Grid.Row="0"
+            FontAttributes="Bold"
+            FontSize="50"
+            HorizontalOptions="Center"
+            Text="Pizza World" />
+        <Image
+            Grid.Row="1"
+            HeightRequest="250"
+            HorizontalOptions="Center"
+            Source="pizzafull.png"
+            VerticalOptions="Center"
+            WidthRequest="250" />
+
+        <VerticalStackLayout Grid.Row="2" Spacing="15">
+            <Label
+                FontAttributes="Bold"
+                FontSize="40"
+                Text="The taste of Italian Pizza" />
+            <Label
+                FontSize="18"
+                LineHeight="1.2"
+                Text="Feel the taste of mouth watering pizza from its origin country" />
+            <Border
+                BackgroundColor="Goldenrod"
+                HeightRequest="50"
+                StrokeShape="RoundRectangle 25"
+                StrokeThickness="0">
+
                 <Border.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
                 </Border.GestureRecognizers>
-                <Label Text="Get Started ->"
-                       VerticalOptions="Center"
-                       FontSize="18"
-                       Padding="5, 5"/>
-                
+                <Label
+                    Padding="5,5"
+                    FontSize="18"
+                    Text="Get Started -&gt;"
+                    VerticalOptions="Center" />
+
             </Border>
         </VerticalStackLayout>
     </Grid>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MauiApp1.ViewModels
 {
-    [QueryProperty(nameof(Pizza), nameof(Pizza))]
+    [QueryProperty(nameof(FoodItem), nameof(FoodItem))]
     public partial class DetailsViewModel : ObservableObject, IDisposable
     {
         private readonly CartViewModel _cartViewModel;
@@ -17,41 +17,41 @@ namespace MauiApp1.ViewModels
             _cartViewModel.CartItemUpdated += OnCartItemUpdated;
         }
 
-        private void OnCartCleared(object? _, EventArgs e) => Pizza.CartQuantity = 0;
-        private void OnCartItemRemoved(object? _, Pizza p) => OnCartItemChanged(p, 0);
-        private void OnCartItemUpdated(object? _, Pizza p) => OnCartItemChanged(p, p.CartQuantity);
-        private void OnCartItemChanged(Pizza p, int quantity)
+        private void OnCartCleared(object? _, EventArgs e) => FoodItem.CartQuantity = 0;
+        private void OnCartItemRemoved(object? _, FoodItem p) => OnCartItemChanged(p, 0);
+        private void OnCartItemUpdated(object? _, FoodItem p) => OnCartItemChanged(p, p.CartQuantity);
+        private void OnCartItemChanged(FoodItem p, int quantity)
         {
-            if (p.Name == Pizza.Name)
+            if (p.Name == FoodItem.Name)
             {
-                Pizza.CartQuantity = quantity;
+                FoodItem.CartQuantity = quantity;
             }
         }
 
         [ObservableProperty]
-        private Pizza _pizza;
+        private FoodItem _foodItem;
 
         [RelayCommand]
         private void AddToCart()
         {
-            Pizza.CartQuantity++;
-            _cartViewModel.UpdateCartItemCommand.Execute(Pizza);
+            FoodItem.CartQuantity++;
+            _cartViewModel.UpdateCartItemCommand.Execute(FoodItem);
         }
 
         [RelayCommand]
         private void RemoveFromCart()
         {
-            if (Pizza.CartQuantity > 0)
-            { 
-                Pizza.CartQuantity--;
-                _cartViewModel.UpdateCartItemCommand.Execute(Pizza);
+            if (FoodItem.CartQuantity > 0)
+            {
+                FoodItem.CartQuantity--;
+                _cartViewModel.UpdateCartItemCommand.Execute(FoodItem);
             }
         }
 
         [RelayCommand]
         private async Task ViewCart()
         {
-            if (Pizza.CartQuantity > 0)
+            if (FoodItem.CartQuantity > 0)
             {
                 await Shell.Current.GoToAsync(nameof(CartPage), animate: true);
             } else
