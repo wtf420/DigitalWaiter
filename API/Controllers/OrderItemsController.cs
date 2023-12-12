@@ -92,6 +92,11 @@ namespace API.Controllers
                 return Problem("Entity set 'OrderContext.OrderItems'  is null.");
             }
 
+            orderItem.Id = 0;
+            foreach (FoodItem foodItem in orderItem.OrderFoodItems)
+            {
+                foodItem.Id = 0;
+            }
             _context.OrderItems.Add(orderItem);
             await _context.SaveChangesAsync();
 

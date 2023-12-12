@@ -9,14 +9,20 @@ namespace MauiApp1.ViewModels
     public partial class HomeViewModel : ObservableObject
     {
         private readonly FoodService _foodService;
+        private bool refresh = true;
         public HomeViewModel(FoodService foodService)
         {
+            refresh = true;
             _foodService = foodService;
             Task.Run(async () =>
             {
-                await ServiceHelper.GetService<FoodService>().RefreshDataAsync();
-                FoodItems = new(_foodService.GetAllFoodItems());
-                OnPropertyChanged(nameof(FoodItems));
+                while (refresh)
+                {
+                    await Task.Delay(5000);
+                    await ServiceHelper.GetService<FoodService>().RefreshDataAsync();
+                    FoodItems = new(_foodService.GetAllFoodItems());
+                    OnPropertyChanged(nameof(FoodItems));
+                }
             });
         }
 
@@ -25,6 +31,7 @@ namespace MauiApp1.ViewModels
         [RelayCommand]
         private async Task GoToAllPizzasPage(bool fromSearch = false)
         {
+            refresh = false;
             var parameters = new Dictionary<string, object>
             {
                 [nameof(AllPizzasViewModel.FromSearch)] = fromSearch
@@ -35,6 +42,7 @@ namespace MauiApp1.ViewModels
         [RelayCommand]
         private async Task GoToDetailsPage(FoodItem foodItem)
         {
+            refresh = false;
             var parameters = new Dictionary<string, object>
             {
                 [nameof(DetailsViewModel.FoodItem)] = foodItem
