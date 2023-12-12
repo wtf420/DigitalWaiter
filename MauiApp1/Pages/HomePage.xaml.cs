@@ -2,7 +2,7 @@ namespace MauiApp1.Pages;
 
 public partial class HomePage : ContentPage
 {
-	private readonly HomeViewModel _homeViewModel;
+	private HomeViewModel _homeViewModel;
 	public HomePage(HomeViewModel homeViewModel)
 	{
 		InitializeComponent();

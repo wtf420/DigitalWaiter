@@ -75,10 +75,22 @@ namespace MauiApp1.ViewModels
         [RelayCommand]
         private async Task PlaceOrder()
         {
-            Items.Clear();
-            CartCleared.Invoke(this, EventArgs.Empty);
-            RecalculateTotalAmount();
-            await Shell.Current.GoToAsync(nameof(CheckoutPage), animate: true);
+            var item = new OrderItem
+            {
+                OrderFoodItems = new(Items),
+                ExtraNote = "Spicy",
+                Date = DateTime.Now.ToString(),
+                Price = TotalAmount
+            };
+            bool result = await ServiceHelper.GetService<OrderService>().PlaceOrder(item);
+            if (result)
+            {
+                Items.Clear();
+                CartCleared.Invoke(this, EventArgs.Empty);
+                RecalculateTotalAmount();
+
+                await Shell.Current.GoToAsync(nameof(CheckoutPage), animate: true);
+            }
         }
     }
 }

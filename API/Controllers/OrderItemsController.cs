@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Models;
+using System.Diagnostics;
 
 namespace API.Controllers
 {
@@ -24,11 +25,12 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderItem>>> GetOrderItems()
         {
-          if (_context.OrderItems == null)
-          {
-              return NotFound();
-          }
-            return await _context.OrderItems.ToListAsync();
+
+            if (_context.OrderItems == null)
+            {
+                return NotFound();
+            }
+            return await _context.OrderItems.Include(x => x.OrderFoodItems).ToListAsync();
         }
 
         // GET: api/OrderItems/5
@@ -85,14 +87,15 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<OrderItem>> PostOrderItem(OrderItem orderItem)
         {
-          if (_context.OrderItems == null)
-          {
-              return Problem("Entity set 'OrderContext.OrderItems'  is null.");
-          }
+            if (_context.OrderItems == null)
+            {
+                return Problem("Entity set 'OrderContext.OrderItems'  is null.");
+            }
+
             _context.OrderItems.Add(orderItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrderItem", new { id = orderItem.Id }, orderItem);
+            return CreatedAtAction("GetOrderItems", new { orderItem });
         }
 
         // DELETE: api/OrderItems/5

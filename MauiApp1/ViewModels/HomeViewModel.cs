@@ -12,7 +12,12 @@ namespace MauiApp1.ViewModels
         public HomeViewModel(FoodService foodService)
         {
             _foodService = foodService;
-            FoodItems = new(_foodService.GetAllFoodItems());
+            Task.Run(async () =>
+            {
+                await ServiceHelper.GetService<FoodService>().RefreshDataAsync();
+                FoodItems = new(_foodService.GetAllFoodItems());
+                OnPropertyChanged(nameof(FoodItems));
+            });
         }
 
         public ObservableCollection<FoodItem> FoodItems { get; set;}

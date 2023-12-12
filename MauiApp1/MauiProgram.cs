@@ -2,6 +2,7 @@
 using MauiApp1.Pages;
 using MauiApp1.Services;
 using MauiApp1.ViewModels;
+using MauiApp1.WinUI;
 using Microsoft.Extensions.Logging;
 
 namespace MauiApp1;
@@ -25,13 +26,16 @@ public static class MauiProgram
 #endif
 
 		AddPizzaServices(builder.Services);
-		return builder.Build();
+        var app = builder.Build();
+        ServiceHelper.Initialize(app.Services);
+        return app;
 	}
 
 	private static IServiceCollection AddPizzaServices(IServiceCollection services)
 	{
 		services.AddSingleton<FoodService>();
-		services.AddSingleton<HomePage>().AddSingleton<HomeViewModel>();
+        services.AddSingleton<OrderService>();
+        services.AddSingleton<HomePage>().AddSingleton<HomeViewModel>();
 		services.AddTransientWithShellRoute<AllPizzasPage, AllPizzasViewModel>(nameof(AllPizzasPage));
         services.AddTransientWithShellRoute<DetailPage, DetailsViewModel>(nameof(DetailPage));
 		services.AddSingleton<CartViewModel>();

@@ -12,10 +12,29 @@ namespace MauiApp1.Services
     {
         public FoodService()
         {
-            RefreshDataAsync();
+            Task.Run(RefreshDataAsync);
+            /*_foodItems = new List<FoodItem>
+            {
+                new FoodItem
+                {
+                    Name = "Peppino's Pizza",
+                    Image = "pizzafull.png",
+                    Price = 100,
+                    IsComplete = true,
+                    Type = "Food"
+                },
+                new FoodItem
+                {
+                    Name = "Gustavo's Pizza",
+                    Image = "pizzafull.png",
+                    Price = 120,
+                    IsComplete = true,
+                    Type = "Food"
+                },
+            };*/
         }
 
-        public async void RefreshDataAsync()
+        public async Task RefreshDataAsync()
         {
             var httpclient = new HttpClient();
             var response = await httpclient.GetAsync("http://localhost:5229/api/FoodItems");
