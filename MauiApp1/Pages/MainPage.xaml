@@ -3,6 +3,7 @@
     x:Class="MauiApp1.Pages.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:cv="clr-namespace:Camera.MAUI;assembly=Camera.MAUI"
     BackgroundColor="DarkGoldenrod"
     Shell.NavBarIsVisible="False">
 
@@ -14,11 +15,14 @@
             FontSize="50"
             HorizontalOptions="Center"
             Text="Pizza World" />
-        <Image
+        <cv:CameraView
+            x:Name="camView"
             Grid.Row="1"
+            BarCodeDetectionEnabled="True"
+            BarcodeDetected="camView_BarcodeDetected"
+            CamerasLoaded="CameraView_CamerasLoaded"
             HeightRequest="250"
             HorizontalOptions="Center"
-            Source="pizzafull.png"
             VerticalOptions="Center"
             WidthRequest="250" />
 

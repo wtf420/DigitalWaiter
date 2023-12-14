@@ -80,7 +80,8 @@ namespace MauiApp1.ViewModels
                 OrderFoodItems = new(Items),
                 ExtraNote = "Spicy",
                 Date = DateTime.Now.ToString(),
-                Price = TotalAmount
+                Price = TotalAmount,
+                Completed = false
             };
             bool result = await ServiceHelper.GetService<OrderService>().PlaceOrder(item);
             if (result)

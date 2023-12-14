@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,12 +38,15 @@ namespace MauiApp1.Services
         public async Task RefreshDataAsync()
         {
             var httpclient = new HttpClient();
-            var response = await httpclient.GetAsync("http://localhost:5229/api/FoodItems");
+            var response = await httpclient.GetAsync(ServiceHelper.ConnectionURL + "api/FoodItems");
             if (response.IsSuccessStatusCode)
             {
                 var data = await response.Content.ReadAsStringAsync();
                 var jsonDataCollection = JsonConvert.DeserializeObject<List<FoodItem>>(data);
                 _foodItems = jsonDataCollection;
+            } else
+            {
+                await Toast.Make(response.StatusCode.ToString(), ToastDuration.Short).Show();
             }
         }
 

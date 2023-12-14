@@ -76,6 +76,16 @@
                     VerticalOptions="End" />
                 <Label
                     Grid.Column="1"
+                    HorizontalOptions="Center"
+                    Text="Refresh"
+                    TextDecorations="Underline"
+                    VerticalOptions="End">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label
+                    Grid.Column="2"
                     HorizontalOptions="End"
                     Text="View All"
                     TextDecorations="Underline"

@@ -8,6 +8,7 @@ namespace MauiApp1.Services
 {
     public static class ServiceHelper
     {
+        public static string ConnectionURL;
         public static IServiceProvider Services { get; private set; }
 
         public static void Initialize(IServiceProvider serviceProvider) =>

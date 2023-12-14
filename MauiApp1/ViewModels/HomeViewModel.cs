@@ -3,27 +3,25 @@ using MauiApp1.Models;
 using MauiApp1.Services;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace MauiApp1.ViewModels
 {
     public partial class HomeViewModel : ObservableObject
     {
         private readonly FoodService _foodService;
-        private bool refresh = true;
+        public bool refresh = true;
         public HomeViewModel(FoodService foodService)
         {
             refresh = true;
             _foodService = foodService;
-            Task.Run(async () =>
-            {
-                while (refresh)
-                {
-                    await Task.Delay(5000);
-                    await ServiceHelper.GetService<FoodService>().RefreshDataAsync();
-                    FoodItems = new(_foodService.GetAllFoodItems());
-                    OnPropertyChanged(nameof(FoodItems));
-                }
-            });
+        }
+
+        public async void Update()
+        {
+            await ServiceHelper.GetService<FoodService>().RefreshDataAsync();
+            FoodItems = new(_foodService.GetAllFoodItems());
+            OnPropertyChanged(nameof(FoodItems));
         }
 
         public ObservableCollection<FoodItem> FoodItems { get; set;}

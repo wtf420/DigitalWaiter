@@ -92,7 +92,7 @@ namespace API.Controllers
                 return Problem("Entity set 'OrderContext.OrderItems'  is null.");
             }
 
-            orderItem.Id = 0;
+            orderItem.Id = _context.OrderItems.Count() + 1;
             foreach (FoodItem foodItem in orderItem.OrderFoodItems)
             {
                 foodItem.Id = 0;
@@ -100,7 +100,7 @@ namespace API.Controllers
             _context.OrderItems.Add(orderItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrderItems", new { orderItem });
+            return CreatedAtAction(nameof(GetOrderItem), new { id = orderItem.Id }, orderItem);
         }
 
         // DELETE: api/OrderItems/5
