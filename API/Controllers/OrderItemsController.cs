@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Models;
 using System.Diagnostics;
+using Microsoft.Office.Interop.Excel;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace API.Controllers
 {
@@ -19,6 +21,37 @@ namespace API.Controllers
         public OrderItemsController(OrderContext context)
         {
             _context = context;
+        }
+
+        private async void SyncData()
+        {
+            Excel.Application xlApp = new Excel.Application();
+            Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(ExcelConnection.OutputFile);
+            Excel._Worksheet xlWorksheet = xlWorkbook.Worksheets[1];
+
+            List<OrderItem> items = await _context.OrderItems.ToListAsync();
+            int rowindex = 2;
+            foreach (OrderItem item in items)
+            {
+                xlWorksheet.Cells[rowindex, 1].value = item.Id;
+                xlWorksheet.Cells[rowindex, 2].value = item.ExtraNote;
+                xlWorksheet.Cells[rowindex, 3].value = item.Completed;
+                xlWorksheet.Cells[rowindex, 4].value = item.Price;
+                xlWorksheet.Cells[rowindex, 5].value = item.Date;
+                if (item.OrderFoodItems != null)
+                {
+                    string str = "";
+                    foreach (FoodItem fooditem in item.OrderFoodItems)
+                    {
+                        str += fooditem.Name + "\n";
+                    }
+                    xlWorksheet.Cells[rowindex, 6].value = str;
+                }
+                else
+                    xlWorksheet.Cells[rowindex, 6].value = "null";
+            }
+            xlWorkbook.Save();
+            xlWorkbook.Close();
         }
 
         // GET: api/OrderItems
@@ -99,6 +132,7 @@ namespace API.Controllers
             }
             _context.OrderItems.Add(orderItem);
             await _context.SaveChangesAsync();
+            await Task.Run(() => SyncData());
 
             return CreatedAtAction(nameof(GetOrderItem), new { id = orderItem.Id }, orderItem);
         }

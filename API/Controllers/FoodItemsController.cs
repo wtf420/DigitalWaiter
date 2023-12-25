@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Models;
+using Microsoft.Office.Interop.Excel;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Runtime.InteropServices;
 
 namespace API.Controllers
 {
@@ -21,13 +24,27 @@ namespace API.Controllers
             //Seeding the database
             if (_context.FoodItems.Count() == 0)
             {
-                var seedData = new FoodItem[]
+                Excel.Application xlApp = new Excel.Application();
+                Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(ExcelConnection.InputFile);
+                Excel._Worksheet xlWorksheet = xlWorkbook.Worksheets[1];
+                Excel.Range xlRange = xlWorksheet.UsedRange;
+
+                int rowCount = xlRange.Rows.Count;
+                var seedData = new List<FoodItem>();
+                for (int i = 2; i <= rowCount; i++)
                 {
-                    new FoodItem{ Id = 1, Name = "Peppino's Pizza", IsComplete = true, Image = "pizzafull.png", Price = 100, Type = "Food"},
-                    new FoodItem{ Id = 2, Name = "Gustavo's Pizza", IsComplete = true, Image = "pizzafull.png", Price = 150, Type = "Food"}
-                };
+                    int id = (int)xlWorksheet.Cells[i, 1].value;
+                    string name = (string)xlWorksheet.Cells[i, 2].value;
+                    bool isComplete = (bool)xlWorksheet.Cells[i, 3].value;
+                    string image = (string)xlWorksheet.Cells[i, 4].value;
+                    float price = (float)xlWorksheet.Cells[i, 5].value;
+                    string type = (string)xlWorksheet.Cells[i, 6].value;
+                    FoodItem item = new FoodItem { Id = id, Name = name, IsComplete = isComplete, Image = image, Price = price, Type = type };
+                    seedData.Add(item);
+                }
                 _context.AddRange(seedData);
                 _context.SaveChanges();
+                xlWorkbook.Close();
             }
         }
 
