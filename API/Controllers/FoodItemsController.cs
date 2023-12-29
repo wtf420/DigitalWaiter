@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Models;
-using Microsoft.Office.Interop.Excel;
-using Excel = Microsoft.Office.Interop.Excel;
-using System.Runtime.InteropServices;
+using System.Drawing;
+using OfficeOpenXml;
+using OfficeOpenXml.Drawing;
 
 namespace API.Controllers
 {
@@ -24,27 +24,43 @@ namespace API.Controllers
             //Seeding the database
             if (_context.FoodItems.Count() == 0)
             {
-                Excel.Application xlApp = new Excel.Application();
-                Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(ExcelConnection.InputFile);
-                Excel._Worksheet xlWorksheet = xlWorkbook.Worksheets[1];
-                Excel.Range xlRange = xlWorksheet.UsedRange;
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                ExcelPackage package = new ExcelPackage(ExcelConnection.InputFile);
+                ExcelWorksheet xlWorksheet = package.Workbook.Worksheets[0];
 
-                int rowCount = xlRange.Rows.Count;
+                int rowCount = xlWorksheet.Rows.Count();
                 var seedData = new List<FoodItem>();
-                for (int i = 2; i <= rowCount; i++)
+                var k = xlWorksheet.Drawings;
+                for (int i = 2; i < rowCount; i++)
                 {
-                    int id = (int)xlWorksheet.Cells[i, 1].value;
-                    string name = (string)xlWorksheet.Cells[i, 2].value;
-                    bool isComplete = (bool)xlWorksheet.Cells[i, 3].value;
-                    string image = (string)xlWorksheet.Cells[i, 4].value;
-                    float price = (float)xlWorksheet.Cells[i, 5].value;
-                    string type = (string)xlWorksheet.Cells[i, 6].value;
-                    FoodItem item = new FoodItem { Id = id, Name = name, IsComplete = isComplete, Image = image, Price = price, Type = type };
+                    long id = Convert.ToInt32(xlWorksheet.Cells[i, 1].Value);
+                    string name = (string)xlWorksheet.Cells[i, 2].Value;
+                    string description = (string)xlWorksheet.Cells[i, 3].Value;
+                    string includedItems = (string)xlWorksheet.Cells[i, 4].Value;
+                    bool IsAvailable = (bool)xlWorksheet.Cells[i, 5].Value;
+                    double price = (double)xlWorksheet.Cells[i, 7].Value;
+                    string type = (string)xlWorksheet.Cells[i, 8].Value;
+
+                    string picture = null;
+                    string? path = (string)xlWorksheet.Cells[i, 6].Value;
+                    using (Image image = Image.FromFile(path))
+                    {
+                        using (MemoryStream m = new MemoryStream())
+                        {
+                            image.Save(m, image.RawFormat);
+                            byte[] imageBytes = m.ToArray();
+
+                            // Convert byte[] to Base64 String
+                            picture = Convert.ToBase64String(imageBytes);
+                        }
+                    }
+
+                    FoodItem item = new FoodItem { Id = id, Name = name, Description = description, IncludedItems = includedItems, IsAvailable = IsAvailable, Image = picture, Price = price, Type = type };
                     seedData.Add(item);
                 }
+
                 _context.AddRange(seedData);
                 _context.SaveChanges();
-                xlWorkbook.Close();
             }
         }
 

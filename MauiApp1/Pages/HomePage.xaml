@@ -113,7 +113,7 @@
                                 <Image
                                     Grid.Row="0"
                                     HeightRequest="150"
-                                    Source="{Binding Image}"
+                                    Source="{Binding Picture}"
                                     WidthRequest="130" />
                                 <Label
                                     Grid.Row="1"

@@ -21,7 +21,7 @@ namespace MauiApp1.Services
                     Name = "Peppino's Pizza",
                     Image = "pizzafull.png",
                     Price = 100,
-                    IsComplete = true,
+                    IsAvailable = true,
                     Type = "Food"
                 },
                 new FoodItem
@@ -29,7 +29,7 @@ namespace MauiApp1.Services
                     Name = "Gustavo's Pizza",
                     Image = "pizzafull.png",
                     Price = 120,
-                    IsComplete = true,
+                    IsAvailable = true,
                     Type = "Food"
                 },
             };*/
@@ -42,7 +42,7 @@ namespace MauiApp1.Services
             if (response.IsSuccessStatusCode)
             {
                 var data = await response.Content.ReadAsStringAsync();
-                var jsonDataCollection = JsonConvert.DeserializeObject<List<FoodItem>>(data);
+                List<FoodItem> jsonDataCollection = JsonConvert.DeserializeObject<List<FoodItem>>(data);
                 _foodItems = jsonDataCollection;
             } else
             {

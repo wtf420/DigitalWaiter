@@ -43,7 +43,7 @@
                                     Grid.Column="2"
                                     HeightRequest="25"
                                     HorizontalOptions="Center"
-                                    Source="{Binding Image}"
+                                    Source="{Binding Picture}"
                                     VerticalOptions="Center"
                                     WidthRequest="25" />
                                 <VerticalStackLayout
