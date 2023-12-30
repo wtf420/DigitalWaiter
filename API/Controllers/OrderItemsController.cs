@@ -28,9 +28,10 @@ namespace API.Controllers
             ExcelWorksheet xlWorksheet = package.Workbook.Worksheets[0];
 
             List<OrderItem> items = await _context.OrderItems.ToListAsync();
-            int rowindex = 2;
+            int rowindex = xlWorksheet.Rows.Count() <= 1 ? 1 : xlWorksheet.Rows.Count();
             foreach (OrderItem item in items)
             {
+                rowindex++;
                 xlWorksheet.Cells[rowindex, 1].Value = item.Id;
                 xlWorksheet.Cells[rowindex, 2].Value = item.ExtraNote;
                 xlWorksheet.Cells[rowindex, 3].Value = item.Completed;
@@ -47,6 +48,7 @@ namespace API.Controllers
                 }
                 else
                     xlWorksheet.Cells[rowindex, 7].Value = "null";
+                package.Save();
             }
         }
 
