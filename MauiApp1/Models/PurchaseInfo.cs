@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace MauiApp1.Models
 {
-    public class OrderItem
+    public class PurchaseInfo
     {
         public long Id { get; set; }
-        public string? ExtraNote { get; set; }
-        public bool Completed { get; set; }
+        public long OrderItemId { get; set; }
+        public long FoodItemId { get; set; }
+        public long Quantity { get; set; }
         public double Price { get; set; }
-        public string Date { get; set; }
-        public virtual List<PurchaseInfo> PurchasedItems { get; set; }
     }
 }

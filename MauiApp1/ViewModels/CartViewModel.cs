@@ -75,12 +75,20 @@ namespace MauiApp1.ViewModels
         [RelayCommand]
         private async Task PlaceOrder()
         {
+            double price = 0;
+            List<PurchaseInfo> info = new List<PurchaseInfo>();
+            foreach (FoodItem fooditem in Items)
+            {
+                info.Add(new PurchaseInfo { FoodItemId = fooditem.Id, Quantity = fooditem.CartQuantity, Price = fooditem.Amount });
+                price += fooditem.Amount;
+            }
+
             var item = new OrderItem
             {
-                OrderFoodItems = new(Items),
+                PurchasedItems = info,
                 ExtraNote = "Spicy",
                 Date = DateTime.Now.ToString(),
-                Price = TotalAmount,
+                Price = price,
                 Completed = false
             };
             bool result = await ServiceHelper.GetService<OrderService>().PlaceOrder(item);

@@ -9,5 +9,14 @@ public class OrderContext : DbContext
     {
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<OrderItem>()
+            .HasMany(x => x.PurchasedItems)
+            .WithOne()
+            .HasForeignKey(x => x.OrderItemId)
+            .HasForeignKey(x => x.FoodItemId);
+    }
+
     public DbSet<OrderItem> OrderItems { get; set; } = null!;
 }

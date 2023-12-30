@@ -35,14 +35,14 @@ namespace API.Controllers
                 xlWorksheet.Cells[rowindex, 1].Value = item.Id;
                 xlWorksheet.Cells[rowindex, 2].Value = item.ExtraNote;
                 xlWorksheet.Cells[rowindex, 3].Value = item.Completed;
-                xlWorksheet.Cells[rowindex, 4].Value = item.Price;
+                xlWorksheet.Cells[rowindex, 4].Value = item.TotalPrice;
                 xlWorksheet.Cells[rowindex, 5].Value = item.Date;
-                if (item.OrderFoodItems != null)
+                if (item.PurchasedItems != null)
                 {
                     string str = "";
-                    foreach (FoodItem fooditem in item.OrderFoodItems)
+                    foreach (PurchaseInfo purchaseInfo in item.PurchasedItems)
                     {
-                        str += fooditem.Name + "\n";
+                        str += $"'{purchaseInfo.FoodItemId} x'{purchaseInfo.Quantity}'";
                     }
                     xlWorksheet.Cells[rowindex, 6].Value = str;
                 }
@@ -56,12 +56,11 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderItem>>> GetOrderItems()
         {
-
             if (_context.OrderItems == null)
             {
                 return NotFound();
             }
-            return await _context.OrderItems.Include(x => x.OrderFoodItems).ToListAsync();
+            return await _context.OrderItems.Include(x => x.PurchasedItems).ToListAsync();
         }
 
         // GET: api/OrderItems/5
@@ -124,10 +123,6 @@ namespace API.Controllers
             }
 
             orderItem.Id = _context.OrderItems.Count() + 1;
-            foreach (FoodItem foodItem in orderItem.OrderFoodItems)
-            {
-                foodItem.Id = 0;
-            }
             _context.OrderItems.Add(orderItem);
             await _context.SaveChangesAsync();
             await Task.Run(() => SyncData());
