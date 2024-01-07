@@ -1,6 +1,10 @@
 using API.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using Hangfire;
+using Hangfire.AspNetCore;
+using Hangfire.InMemory;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +17,12 @@ builder.Services.AddDbContext<OrderContext>(opt =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHangfire(configuration => configuration
+        .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+        .UseSimpleAssemblyNameTypeSerializer()
+        .UseRecommendedSerializerSettings()
+        .UseInMemoryStorage());
+builder.Services.AddHangfireServer();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,7 +33,7 @@ if (app.Environment.IsDevelopment())
 }
 
 //app.UseHttpsRedirection();
-
+app.UseHangfireDashboard();
 app.UseAuthorization();
 
 app.MapControllers();

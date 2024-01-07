@@ -63,6 +63,7 @@ namespace MauiApp1.Services
             var httpclient = new HttpClient();
             var _serializerOptions = new JsonSerializerOptions();
             string json = System.Text.Json.JsonSerializer.Serialize<OrderItem>(orderItem, _serializerOptions);
+            Debug.WriteLine(json);
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await httpclient.PostAsync(ServiceHelper.ConnectionURL + "api/OrderItems", content);
             if (response.IsSuccessStatusCode)

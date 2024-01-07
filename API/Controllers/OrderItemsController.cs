@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using API.Models;
 using System.Diagnostics;
 using OfficeOpenXml;
+using Hangfire;
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using System.Reflection;
 
 namespace API.Controllers
 {
@@ -22,12 +25,13 @@ namespace API.Controllers
             _context = context;
         }
 
-        private async void SyncData()
+        [NonAction]
+        public async Task SyncData()
         {
             ExcelPackage package = new ExcelPackage(ExcelConnection.OutputFile);
             ExcelWorksheet xlWorksheet = package.Workbook.Worksheets[0];
 
-            List<OrderItem> items = await _context.OrderItems.ToListAsync();
+            List<OrderItem> items = await _context.OrderItems.Include(x => x.PurchasedItems).ToListAsync();
             int rowindex = xlWorksheet.Rows.Count() <= 1 ? 1 : xlWorksheet.Rows.Count();
             foreach (OrderItem item in items)
             {
@@ -42,14 +46,16 @@ namespace API.Controllers
                     string str = "";
                     foreach (PurchaseInfo purchaseInfo in item.PurchasedItems)
                     {
-                        str += $"'{purchaseInfo.FoodItemId} x'{purchaseInfo.Quantity}'";
+                        str += $"ID: {purchaseInfo.FoodItemId}; ";
+                        str += $"Số lượng: {purchaseInfo.Quantity}; ";
+                        str += $"Thành tiền: {purchaseInfo.Price}; ";
                     }
                     xlWorksheet.Cells[rowindex, 6].Value = str;
                 }
                 else
-                    xlWorksheet.Cells[rowindex, 7].Value = "null";
-                package.Save();
+                    xlWorksheet.Cells[rowindex, 6].Value = "null";
             }
+            package.Save();
         }
 
         // GET: api/OrderItems
@@ -125,7 +131,7 @@ namespace API.Controllers
             orderItem.Id = _context.OrderItems.Count() + 1;
             _context.OrderItems.Add(orderItem);
             await _context.SaveChangesAsync();
-            await Task.Run(() => SyncData());
+            BackgroundJob.Enqueue(() => SyncData());
 
             return CreatedAtAction(nameof(GetOrderItem), new { id = orderItem.Id }, orderItem);
         }
