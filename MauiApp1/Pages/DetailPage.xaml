@@ -26,39 +26,81 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="*, Auto">
-        <ScrollView Grid.Row="0" Padding="15" VerticalOptions="FillAndExpand">
-            <VerticalStackLayout Spacing="15">
-                <Image
-                    HeightRequest="200"
-                    HorizontalOptions="Center"
-                    Source="{Binding FoodItem.Picture}"
-                    VerticalOptions="Center"
-                    WidthRequest="200" />
-                <Label
-                    FontAttributes="Bold"
-                    FontSize="20"
-                    HorizontalOptions="Center"
-                    Text="{Binding FoodItem.Name}"
-                    TextColor="DarkGoldenrod"
-                    HorizontalTextAlignment="Center"
-                    FontFamily="Urbanist"/>
-                <Grid ColumnDefinitions="*, *">
+        <ScrollView Grid.Row="0" VerticalOptions="FillAndExpand">
+            <VerticalStackLayout Spacing="5">
+                <Grid>
+                    <Image
+                        Source="{Binding FoodItem.Picture}"
+                        VerticalOptions="Center"
+                        HorizontalOptions="FillAndExpand" />    
+                    <BoxView Color="Transparent">
+                        <BoxView.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="Transparent" Offset="0.0" />
+                                <GradientStop Color="Black" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </BoxView.Background>
+                    </BoxView>
+                    <Label
+                        Margin="0,0,0,15"
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        VerticalOptions="End"
+                        Text="{Binding FoodItem.Name}"
+                        TextColor="GhostWhite"
+                        HorizontalTextAlignment="Center"
+                        FontFamily="Urbanist"/>
+                </Grid>
+                <Grid ColumnDefinitions="*, *" Padding="15">
                     <Label
                         Grid.Column="0"
                         FontSize="18"
-                        Text="{Binding FoodItem.Price, StringFormat='${0:N2}'}"
+                        Text="{Binding FoodItem.Amount, StringFormat='${0:N2}'}"
                         TextColor="Black"
-                        FontFamily="InterMedium"/>
+                        FontFamily="InterMedium" />
                     <HorizontalStackLayout
                         Grid.Column="1"
                         HorizontalOptions="End"
                         Spacing="2"
                         VerticalOptions="Center">
-                        <Label Text="4" TextColor="Black" />
-                        <Label Text="*" TextColor="Black" />
+                        <Grid
+                             Grid.Row="0"
+                             Grid.Column="1"
+                             ColumnDefinitions="50, 40, 50"
+                             HorizontalOptions="End"
+                             VerticalOptions="Center">
+                            <ImageButton
+                                 Grid.Column="0"
+                                 Command="{Binding RemoveFromCartCommand}"
+                                 Source="minus.png"
+                                 Style="{StaticResource QuantityBtn}"
+                                 VerticalOptions="Center">  
+                                <ImageButton.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="Gold" />
+                                </ImageButton.Behaviors>
+                            </ImageButton>
+                            <Label
+                                 Grid.Column="1"
+                                 FontSize="25"
+                                 HorizontalOptions="Center"
+                                 Text="{Binding FoodItem.CartQuantity}"
+                                 TextColor="Black"
+                                 VerticalOptions="Center" />
+                            <ImageButton
+                                 Grid.Column="2"
+                                 Command="{Binding AddToCartCommand}"
+                                 Source="add.png"
+                                 Style="{StaticResource QuantityBtn}">
+                                <ImageButton.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="Gold" />
+                                </ImageButton.Behaviors>
+                            </ImageButton>
+                        </Grid>
                     </HorizontalStackLayout>
                 </Grid>
                 <Label
+                    Padding="15,0"
                     Margin="0,10"
                     FontAttributes="Bold"
                     FontSize="15"
@@ -66,6 +108,7 @@
                     FontFamily="Urbanist"
                     TextColor="Black" />
                 <Label
+                     Padding="15,0"
                     FontSize="14"
                     LineHeight="1.5"
                     Text="{Binding FoodItem.Description}"
@@ -75,64 +118,17 @@
         </ScrollView>
         <Border
             x:Name="bottomBox"
-            Grid.Row="1"
-            Padding="15"
-            BackgroundColor="DarkGoldenrod"
-            HeightRequest="150"
-            StrokeShape="RoundRectangle 30,30, 0, 0"
-            StrokeThickness="0"
-            VerticalOptions="End">
-            <Border.Shadow>
-                <Shadow Brush="Gold" Radius="100" />
-            </Border.Shadow>
-            <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto">
-                <Label
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    FontAttributes="Bold"
-                    FontSize="20"
-                    Text="{Binding FoodItem.Amount, StringFormat='${0:N2}'}"
-                    TextColor="White"
-                    FontFamily="Inter"
-                    VerticalOptions="Center" />
-                <Grid
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    ColumnDefinitions="50, 40, 50"
-                    HorizontalOptions="End"
-                    VerticalOptions="Center">
+            HeightRequest="60"
+            VerticalOptions="End"
+            BackgroundColor="white"
+            StrokeShape="RoundRectangle 10,10, 0, 0">
 
-                    <ImageButton
-                        Grid.Column="0"
-                        Command="{Binding RemoveFromCartCommand}"
-                        Source="minus.png"
-                        Style="{StaticResource QuantityBtn}"
-                        VerticalOptions="Center">
-                        <ImageButton.Behaviors>
-                            <toolkit:IconTintColorBehavior TintColor="Gold" />
-                        </ImageButton.Behaviors>
-                    </ImageButton>
-                    <Label
-                        Grid.Column="1"
-                        FontSize="25"
-                        HorizontalOptions="Center"
-                        Text="{Binding FoodItem.CartQuantity}"
-                        TextColor="White"
-                        VerticalOptions="Center" />
-                    <ImageButton
-                        Grid.Column="2"
-                        Command="{Binding AddToCartCommand}"
-                        Source="add.png"
-                        Style="{StaticResource QuantityBtn}">
-                        <ImageButton.Behaviors>
-                            <toolkit:IconTintColorBehavior TintColor="Gold" />
-                        </ImageButton.Behaviors>
-                    </ImageButton>
-                </Grid>
+            <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto">
+               
                 <Button
                     Grid.Row="1"
                     Grid.ColumnSpan="2"
-                    Margin="0,20"
+                    Margin="0,10"
                     Padding="80,10"
                     BackgroundColor="Goldenrod"
                     Command="{Binding ViewCartCommand}"
