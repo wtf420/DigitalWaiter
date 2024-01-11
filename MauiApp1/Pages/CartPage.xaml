@@ -16,7 +16,7 @@
         <ScrollView>
             <CollectionView ItemsSource="{Binding Items}">
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                    <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:FoodItem">
@@ -24,15 +24,17 @@
                             Padding="10"
                             BackgroundColor="White"
                             StrokeShape="RoundRectangle 15"
-                            StrokeThickness="0">
+                            StrokeThickness="0"
+                            HorizontalOptions="FillAndExpand"
+                            Margin="10,5,10,0">
                             <Grid ColumnDefinitions="25, auto, 50, *, 80, 25">
                                 <Label
                                     Grid.Column="0"
-                                    FontAttributes="Bold"
                                     FontSize="18"
                                     HorizontalOptions="Center"
                                     Text="{Binding CartQuantity}"
                                     TextColor="Black"
+                                    FontFamily="Inter"
                                     VerticalOptions="Center" />
                                 <Label
                                     Grid.Column="1"
@@ -50,17 +52,17 @@
                                     Grid.Column="3"
                                     Spacing="2"
                                     VerticalOptions="Center">
-                                    <Label Text="{Binding Name}" TextColor="Black" />
-                                    <Label Text="{Binding Price, StringFormat='${0:N2}'}" TextColor="Black" />
+                                    <Label Text="{Binding Name}" TextColor="Black" FontFamily="Urbanist" FontAttributes="Bold"/>
+                                    <Label Text="{Binding Price, StringFormat='Unit price: ${0:N2}'}" TextColor="Black" />
                                 </VerticalStackLayout>
 
                                 <Label
                                     Grid.Column="4"
-                                    FontAttributes="Bold"
                                     FontSize="15"
                                     HorizontalOptions="Center"
                                     Text="{Binding Amount, StringFormat='${0:N2}'}"
                                     TextColor="Black"
+                                    FontFamily="InterMedium"
                                     VerticalOptions="Center" />
                                 <Image
                                     Grid.Column="5"
@@ -98,21 +100,27 @@
             </CollectionView>
         </ScrollView>
         <Border
-            Margin="5"
+            Margin="5,-5"
             Padding="10"
-            BackgroundColor="DarkGoldenrod"
             StrokeShape="RoundRectangle 40"
             StrokeThickness="0"
             VerticalOptions="End">
             <Grid ColumnDefinitions="*, *">
-                <Label
-                    Grid.Column="0"
-                    Padding="18,0"
-                    FontAttributes="Bold"
-                    FontSize="20"
-                    Text="{Binding TotalAmount, StringFormat='${0:N2}'}"
-                    TextColor="White"
-                    VerticalOptions="Center" />
+                <StackLayout Grid.Column="0" Padding="18,0" Orientation="Horizontal">
+                    <Label
+                        FontSize="20"
+                        Text="Total:"
+                        TextColor="Black"
+                        FontFamily="InterBold"
+                        VerticalOptions="Center" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        Text="{Binding TotalAmount, StringFormat=' ${0:N2}'}"
+                        TextColor="Black"
+                        FontFamily="InterBold"
+                        VerticalOptions="Center"/>
+                </StackLayout>
                 <Button
                     Grid.Column="1"
                     Margin="0,20"
@@ -122,6 +130,7 @@
                     CornerRadius="22"
                     HorizontalOptions="End"
                     Text="Place Order"
+                    FontFamily="InterMedium"
                     VerticalOptions="Center" />
             </Grid>
         </Border>

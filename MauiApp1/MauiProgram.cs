@@ -19,6 +19,11 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+				fonts.AddFont("Urbanist-Italic-VariableFont-wght.ttf", "UrbanistItalic");
+				fonts.AddFont("Urbanist-VariableFont-wght.ttf", "Urbanist");
+				fonts.AddFont("Inter-Medium.ttf", "InterMedium");
+				fonts.AddFont("Inter-Regular.ttf", "Inter");
+				fonts.AddFont("Inter-Semibold.ttf", "InterSemiBold");
 			})
 			.UseMauiCommunityToolkit();
 

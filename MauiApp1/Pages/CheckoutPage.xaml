@@ -4,7 +4,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    Title="CheckoutPage">
+    Title="CheckoutPage"
+    BackgroundColor="White">
     <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
         <Image
             x:Name="img"
@@ -19,14 +20,17 @@
             x:Name="msg"
             FontSize="30"
             Text="Order placed successfully"
+            Margin="10"
             TextColor="Green" />
         <Button
             x:Name="homeBTn"
             Padding="50,10"
+            Margin="30"
             BackgroundColor="DarkGoldenrod"
             Clicked="homeBTn_Clicked"
             CornerRadius="22"
             HorizontalOptions="Center"
-            Text="Return to homescreen" />
+            Text="Return to homescreen" 
+            FontFamily="InterMedium"/>
     </VerticalStackLayout>
 </ContentPage>

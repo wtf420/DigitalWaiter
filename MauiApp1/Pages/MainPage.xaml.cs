@@ -25,7 +25,7 @@ public partial class MainPage : ContentPage
         {
             PossibleFormats = { ZXing.BarcodeFormat.QR_CODE }
         };
-        camView.Camera = camView.Cameras.First();
+        camView.Camera = camView.Cameras.FirstOrDefault();
         MainThread.BeginInvokeOnMainThread(async () =>
         {
             await camView.StopCameraAsync();

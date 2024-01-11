@@ -6,13 +6,32 @@
     xmlns:models="clr-namespace:MauiApp1.Models"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:MauiApp1.ViewModels"
-    Title="Pizza World"
+    Title=""
     Padding="15"
     x:DataType="vm:HomeViewModel"
     BackgroundColor="DarkGoldenrod">
+    <ContentPage.Background>
 
-    <ScrollView>
+        <LinearGradientBrush>
+            <GradientStop Color="DarkGoldenrod"
+                      Offset="0.1" />
+            <GradientStop Color="DarkBlue"
+                      Offset="1.0" />
+        </LinearGradientBrush>
+
+    </ContentPage.Background>
+    <ScrollView
+        VerticalScrollBarVisibility="Never"
+        HorizontalScrollBarVisibility="Never">
         <VerticalStackLayout>
+            <Label
+                Text="Pizzaria"
+                FontSize="30"
+                Padding="0,0,0,20"
+                FontFamily="InterSemiBold"
+                FontAttributes="Bold"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="Start" />
             <Border
                 Padding="15"
                 BackgroundColor="Goldenrod"
@@ -25,10 +44,10 @@
                     <VerticalStackLayout
                         Grid.Row="0"
                         Grid.Column="0"
-                        Spacing="10">
+                        Spacing="5">
                         <Label
-                            FontAttributes="Bold"
                             FontSize="25"
+                            FontFamily="InterSemiBold"
                             Text="Best Offer"
                             VerticalOptions="Center" />
                         <Label Text="Grab this amazing offer" />
@@ -37,11 +56,12 @@
                     <Button
                         Grid.Row="1"
                         Grid.Column="0"
-                        Padding="50,0"
+                        Padding="20,8"
                         BackgroundColor="PaleGoldenrod"
-                        CornerRadius="22"
-                        HorizontalOptions="Center"
-                        Text="Get it now!"
+                        CornerRadius="20"
+                        HorizontalOptions="Start"
+                        FontFamily="InterSemiBold"
+                        Text="Get it NOW!"
                         TextColor="Black" />
                     <Image
                         Grid.RowSpan="2"
@@ -53,13 +73,14 @@
             </Border>
 
             <Border
-                Stroke="Goldenrod"
                 StrokeShape="RoundRectangle 22"
-                StrokeThickness="2">
+                Margin="0,20,0,0"
+                BackgroundColor="White">
                 <Label
-                    Padding="10,14"
+                    Padding="20,14"
                     Text="Search Here..."
-                    TextColor="Goldenrod" />
+                    FontFamily="Inter"
+                    TextColor="Black" />
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding GoToAllPizzasPageCommand}" CommandParameter="{x:Boolean True}" />
                 </Border.GestureRecognizers>
@@ -67,95 +88,90 @@
 
             <BoxView HeightRequest="15" Color="Transparent" />
 
-            <Grid ColumnDefinitions="*, *">
+            <Grid
+                Margin="0,0,0,10"
+                ColumnDefinitions="*, *">
                 <Label
                     Grid.Column="0"
-                    FontAttributes="Bold"
                     FontSize="20"
+                    FontFamily="InterSemiBold"
                     Text="Popular Items"
                     VerticalOptions="End" />
-                <Label
+                <StackLayout
                     Grid.Column="1"
-                    HorizontalOptions="Center"
-                    Text="Refresh"
-                    TextDecorations="Underline"
-                    VerticalOptions="End">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                    </Label.GestureRecognizers>
-                </Label>
-                <Label
-                    Grid.Column="2"
+                    Orientation="Horizontal"
+                    VerticalOptions="End"
                     HorizontalOptions="End"
-                    Text="View All"
-                    TextDecorations="Underline"
-                    VerticalOptions="End">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding GoToAllPizzasPageCommand}" CommandParameter="{x:Boolean False}" />
-                    </Label.GestureRecognizers>
-                </Label>
+                    Spacing="20">
+                                <Label
+                                    Text="Refresh"
+                                    FontFamily="Inter">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            <Label
+                                Text="View All"
+                                FontFamily="Inter">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GoToAllPizzasPageCommand}" CommandParameter="{x:Boolean False}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                </StackLayout>
             </Grid>
 
-            <FlexLayout
+            <CollectionView
                 x:Name="FoodList"
-                BindableLayout.ItemsSource="{Binding FoodItems}"
-                Wrap="Wrap">
-                <BindableLayout.ItemTemplate>
+                ItemsSource="{Binding FoodItems}">  
+                <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:FoodItem">
-                        <Border
+                        <Frame
                             Margin="2"
                             Padding="0"
                             BackgroundColor="PaleGoldenrod"
-                            FlexLayout.Basis="50%"
-                            StrokeShape="RoundRectangle 10"
-                            StrokeThickness="0">
-                            <Grid RowDefinitions="150, auto, auto, auto" RowSpacing="5">
+                            CornerRadius="10"
+                            HorizontalOptions="FillAndExpand"
+                            HeightRequest="140">  
+                            <Grid 
+                                ColumnDefinitions="150, *" 
+                                RowDefinitions="*, auto, auto" 
+                                RowSpacing="5"
+                                Padding="15,20">
                                 <Image
-                                    Grid.Row="0"
-                                    HeightRequest="150"
+                                    Grid.Column="0"
+                                    Grid.RowSpan="3"
+                                    HeightRequest="80"
                                     Source="{Binding Picture}"
                                     WidthRequest="130" />
                                 <Label
-                                    Grid.Row="1"
-                                    FontSize="20"
-                                    HorizontalOptions="Center"
-                                    Text="{Binding Name}" />
-                                <Grid Grid.Row="2" ColumnDefinitions="*, *">
-                                    <Label
-                                        Grid.Column="0"
-                                        FontAttributes="Bold"
-                                        Text="{Binding Price, StringFormat='${0:N2}'}"
-                                        VerticalOptions="Center" />
-                                    <HorizontalStackLayout
-                                        Grid.Column="1"
-                                        HorizontalOptions="End"
-                                        Spacing="2"
-                                        VerticalOptions="Center">
-                                        <Label Text="4" />
-                                        <Label Text="*" />
-                                    </HorizontalStackLayout>
-                                </Grid>
-
-                                <Button
-                                    Grid.Row="3"
-                                    Padding="25,0"
-                                    BackgroundColor="Gold"
-                                    Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=GoToDetailsPageCommand}"
-                                    CommandParameter="{Binding .}"
-                                    CornerRadius="22"
-                                    FontAttributes="Bold"
-                                    HorizontalOptions="Center"
-                                    Text="View More"
+                                    Grid.Column="1"
+                                    Grid.Row="0"
+                                    FontSize="12"
                                     TextColor="Black"
-                                    VerticalOptions="End" />
+                                    HorizontalOptions="Start"
+                                    LineBreakMode="WordWrap"
+                                    Text="{Binding Name}" />        
+                                <Label
+                                    Grid.Column="1"
+                                    Grid.Row="1"
+                                    FontAttributes="Bold"
+                                    TextColor="Black"
+                                    Text="{Binding Price, StringFormat='${0:N2}'}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Grid.Column="1"
+                                    Grid.Row="2"
+                                    Text="4*"
+                                    TextColor="Black"
+                                    HorizontalOptions="Start" />
                             </Grid>
-                            <Border.GestureRecognizers>
+                            <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=GoToDetailsPageCommand}" CommandParameter="{Binding .}" />
-                            </Border.GestureRecognizers>
-                        </Border>
+                            </Frame.GestureRecognizers>
+                        </Frame>
                     </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </FlexLayout>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
         </VerticalStackLayout>
     </ScrollView>

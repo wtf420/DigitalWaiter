@@ -4,20 +4,36 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:cv="clr-namespace:Camera.MAUI;assembly=Camera.MAUI"
-    BackgroundColor="DarkGoldenrod"
     Shell.NavBarIsVisible="False">
+    <ContentPage.Background>
 
-    <Grid Padding="15,25" RowDefinitions="Auto, *, Auto">
+        <LinearGradientBrush>
+            <GradientStop Color="DarkGoldenrod"
+                          Offset="0.1" />
+            <GradientStop Color="DarkBlue"
+                          Offset="1.0" />
+        </LinearGradientBrush>
+
+    </ContentPage.Background>
+    <Grid Padding="15,50" RowDefinitions="Auto, Auto, *, Auto">
+        <Image 
+            Grid.Row="0"
+            Source="pizza.png" 
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            HeightRequest="45"
+            WidthRequest="45"/>
 
         <Label
-            Grid.Row="0"
+            Grid.Row="1"
             FontAttributes="Bold"
             FontSize="50"
             HorizontalOptions="Center"
-            Text="Pizza World" />
+            FontFamily="Urbanist"
+            Text="Pizzaria" />
         <cv:CameraView
             x:Name="camView"
-            Grid.Row="1"
+            Grid.Row="2"
             BarCodeDetectionEnabled="True"
             BarcodeDetected="camView_BarcodeDetected"
             CamerasLoaded="CameraView_CamerasLoaded"
@@ -26,15 +42,19 @@
             VerticalOptions="Center"
             WidthRequest="250" />
 
-        <VerticalStackLayout Grid.Row="2" Spacing="15">
+        <VerticalStackLayout Grid.Row="3" Spacing="15">
             <Label
                 FontAttributes="Bold"
-                FontSize="40"
-                Text="The taste of Italian Pizza" />
+                FontSize="30"
+                Text="The taste of Italian Pizza"
+                FontFamily="InterSemiBold"
+                HorizontalTextAlignment="Center"/>
             <Label
-                FontSize="18"
+                FontSize="14"
                 LineHeight="1.2"
-                Text="Feel the taste of mouth watering pizza from its origin country" />
+                Text="Feel the taste of mouth watering pizza from its origin country"
+                FontFamily="Inter"
+                HorizontalTextAlignment="Center"/>
             <Border
                 BackgroundColor="Goldenrod"
                 HeightRequest="50"
@@ -45,10 +65,10 @@
                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
                 </Border.GestureRecognizers>
                 <Label
-                    Padding="5,5"
                     FontSize="18"
                     Text="Get Started -&gt;"
-                    VerticalOptions="Center" />
+                    VerticalOptions="Center"
+                    HorizontalTextAlignment="Center"/>
 
             </Border>
         </VerticalStackLayout>

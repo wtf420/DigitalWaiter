@@ -26,7 +26,7 @@
             Grid.Row="0"
             CancelButtonColor="Red"
             Placeholder="Search for pizza..."
-            PlaceholderColor="Goldenrod"
+            PlaceholderColor="Black"
             SearchCommand="{Binding SearchPizzasCommand}"
             SearchCommandParameter="{Binding Source={x:Reference searchBar}, Path=Text}"
             TextChanged="searchBar_TextChanged"
@@ -46,32 +46,37 @@
                                 StrokeShape="RoundRectangle 10"
                                 StrokeThickness="0">
                                 <Grid ColumnDefinitions="130, *">
-                                    <Image Grid.Column="0" Source="{Binding Picture}" />
+                                    <Image Grid.Column="0" Source="{Binding Picture}"
+                                           HeightRequest="80"/>
                                     <VerticalStackLayout
+                                        Padding="10,0,10,40"
                                         Grid.Column="1"
-                                        Spacing="5"
+                                        Spacing="8"
                                         VerticalOptions="Center">
-                                        <Label FontSize="20" Text="{Binding Name}" />
+                                        <Label FontSize="18" Text="{Binding Name}"
+                                               TextColor="Black"
+                                               FontFamily="Urbanist"
+                                               FontAttributes="Bold"/>
                                         <Grid ColumnDefinitions="*, *">
                                             <Label
                                                 Grid.Column="0"
-                                                FontAttributes="Bold"
-                                                Text="{Binding Price, StringFormat='${0:N2}'}" />
+                                                Text="{Binding Price, StringFormat='${0:N2}'}" 
+                                                FontFamily="Inter"
+                                                TextColor="Black"/>
                                             <HorizontalStackLayout
                                                 Grid.Column="1"
                                                 HorizontalOptions="End"
                                                 Spacing="2"
                                                 VerticalOptions="Center">
-                                                <Label Text="4" />
-                                                <Label Text="*" />
+                                                <Label Text="4*" TextColor="Black"/>
                                             </HorizontalStackLayout>
                                         </Grid>
 
                                         <Border
-                                            Padding="25,0"
+                                            Padding="20,0"
                                             BackgroundColor="Gold"
-                                            HeightRequest="45"
-                                            HorizontalOptions="Center"
+                                            HeightRequest="35"
+                                            HorizontalOptions="End"
                                             StrokeShape="RoundRectangle 25"
                                             StrokeThickness="0"
                                             VerticalOptions="End">
