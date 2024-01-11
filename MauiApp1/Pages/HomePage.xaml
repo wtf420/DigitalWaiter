@@ -24,14 +24,48 @@
         VerticalScrollBarVisibility="Never"
         HorizontalScrollBarVisibility="Never">
         <VerticalStackLayout>
-            <Label
-                Text="Pizzaria"
-                FontSize="30"
-                Padding="0,0,0,20"
-                FontFamily="InterSemiBold"
-                FontAttributes="Bold"
-                HorizontalOptions="CenterAndExpand"
-                VerticalOptions="Start" />
+            <Grid ColumnDefinitions="*">
+                <AbsoluteLayout>
+                    <ImageButton
+                        Source="shopping_cart.png"
+                        HeightRequest="40"
+                        WidthRequest="40"
+                         AbsoluteLayout.LayoutBounds="1, 0.45, 0.1, 0.1"
+                         AbsoluteLayout.LayoutFlags="All"/>
+                    <Frame
+                         Padding="0"
+                         HasShadow="False"
+                         BackgroundColor="Black"
+                         CornerRadius="10"
+                         HorizontalOptions="End"
+                         VerticalOptions="Start"
+                         WidthRequest="20"
+                         HeightRequest="20"
+                         AbsoluteLayout.LayoutBounds="1, 0, 0.05, 0.05"
+                         AbsoluteLayout.LayoutFlags="All">
+                        <Label
+                             Text="2"
+                             FontSize="10"
+                             HorizontalOptions="CenterAndExpand"
+                             VerticalOptions="CenterAndExpand"
+                             TextColor="White"/>
+                    </Frame>
+                </AbsoluteLayout>
+                <Label
+                    Grid.Column="0"
+                    Text="Pizzaria"
+                    FontSize="30"
+                    Padding="0,0,0,20"
+                    FontFamily="InterSemiBold"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Start" />
+                <Grid
+                    Grid.Column="0"
+                    HorizontalOptions="End"
+                    VerticalOptions="Start">
+                </Grid>
+            </Grid>
             <Border
                 Padding="15"
                 BackgroundColor="Goldenrod"
