@@ -32,7 +32,9 @@
                     <Image
                         Source="{Binding FoodItem.Picture}"
                         VerticalOptions="Center"
-                        HorizontalOptions="FillAndExpand" />    
+                        HorizontalOptions="FillAndExpand"
+                        MaximumHeightRequest="200"
+                        Aspect="Fill"/>    
                     <BoxView Color="Transparent">
                         <BoxView.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
