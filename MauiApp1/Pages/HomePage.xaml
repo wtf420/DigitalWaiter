@@ -13,58 +13,55 @@
     <ContentPage.Background>
 
         <LinearGradientBrush>
-            <GradientStop Color="DarkGoldenrod"
-                      Offset="0.1" />
-            <GradientStop Color="DarkBlue"
-                      Offset="1.0" />
+            <GradientStop Offset="0.1" Color="DarkGoldenrod" />
+            <GradientStop Offset="1.0" Color="DarkBlue" />
         </LinearGradientBrush>
 
     </ContentPage.Background>
-    <ScrollView
-        VerticalScrollBarVisibility="Never"
-        HorizontalScrollBarVisibility="Never">
+    <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
         <VerticalStackLayout>
             <Grid ColumnDefinitions="*">
                 <AbsoluteLayout>
                     <ImageButton
-                        Source="shopping_cart.png"
+                        AbsoluteLayout.LayoutBounds="1, 0.45, 0.1, 0.1"
+                        AbsoluteLayout.LayoutFlags="All"
+                        Command="{Binding GoToCartViewPageCommand}"
                         HeightRequest="40"
-                        WidthRequest="40"
-                         AbsoluteLayout.LayoutBounds="1, 0.45, 0.1, 0.1"
-                         AbsoluteLayout.LayoutFlags="All"/>
+                        Source="shopping_cart.png"
+                        WidthRequest="40" />
                     <Frame
-                         Padding="0"
-                         HasShadow="False"
-                         BackgroundColor="Black"
-                         CornerRadius="10"
-                         HorizontalOptions="End"
-                         VerticalOptions="Start"
-                         WidthRequest="20"
-                         HeightRequest="20"
-                         AbsoluteLayout.LayoutBounds="1, 0, 0.05, 0.05"
-                         AbsoluteLayout.LayoutFlags="All">
+                        Padding="0"
+                        AbsoluteLayout.LayoutBounds="1, 0, 0.05, 0.05"
+                        AbsoluteLayout.LayoutFlags="All"
+                        BackgroundColor="Black"
+                        CornerRadius="10"
+                        HasShadow="False"
+                        HeightRequest="20"
+                        HorizontalOptions="End"
+                        VerticalOptions="Start"
+                        WidthRequest="20">
                         <Label
-                             Text="2"
-                             FontSize="10"
-                             HorizontalOptions="CenterAndExpand"
-                             VerticalOptions="CenterAndExpand"
-                             TextColor="White"/>
+                            FontSize="10"
+                            HorizontalOptions="CenterAndExpand"
+                            Text="{Binding a}"
+                            TextColor="White"
+                            VerticalOptions="CenterAndExpand" />
                     </Frame>
                 </AbsoluteLayout>
+
                 <Label
                     Grid.Column="0"
-                    Text="Pizzaria"
-                    FontSize="30"
                     Padding="0,0,0,20"
-                    FontFamily="InterSemiBold"
                     FontAttributes="Bold"
+                    FontFamily="InterSemiBold"
+                    FontSize="30"
                     HorizontalOptions="Center"
+                    Text="Pizzaria"
                     VerticalOptions="Start" />
                 <Grid
                     Grid.Column="0"
                     HorizontalOptions="End"
-                    VerticalOptions="Start">
-                </Grid>
+                    VerticalOptions="Start" />
             </Grid>
             <Border
                 Padding="15"
@@ -80,8 +77,8 @@
                         Grid.Column="0"
                         Spacing="5">
                         <Label
-                            FontSize="25"
                             FontFamily="InterSemiBold"
+                            FontSize="25"
                             Text="Best Offer"
                             VerticalOptions="Center" />
                         <Label Text="Grab this amazing offer" />
@@ -93,8 +90,8 @@
                         Padding="20,8"
                         BackgroundColor="PaleGoldenrod"
                         CornerRadius="20"
-                        HorizontalOptions="Start"
                         FontFamily="InterSemiBold"
+                        HorizontalOptions="Start"
                         Text="Get it NOW!"
                         TextColor="Black" />
                     <Image
@@ -107,13 +104,13 @@
             </Border>
 
             <Border
-                StrokeShape="RoundRectangle 22"
                 Margin="0,20,0,0"
-                BackgroundColor="White">
+                BackgroundColor="White"
+                StrokeShape="RoundRectangle 22">
                 <Label
                     Padding="20,14"
-                    Text="Search Here..."
                     FontFamily="Inter"
+                    Text="Search Here..."
                     TextColor="Black" />
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding GoToAllPizzasPageCommand}" CommandParameter="{x:Boolean True}" />
@@ -122,41 +119,33 @@
 
             <BoxView HeightRequest="15" Color="Transparent" />
 
-            <Grid
-                Margin="0,0,0,10"
-                ColumnDefinitions="*, *">
+            <Grid Margin="0,0,0,10" ColumnDefinitions="*, *">
                 <Label
                     Grid.Column="0"
-                    FontSize="20"
                     FontFamily="InterSemiBold"
+                    FontSize="20"
                     Text="Popular Items"
                     VerticalOptions="End" />
                 <StackLayout
                     Grid.Column="1"
-                    Orientation="Horizontal"
-                    VerticalOptions="End"
                     HorizontalOptions="End"
-                    Spacing="20">
-                                <Label
-                                    Text="Refresh"
-                                    FontFamily="Inter">
-                                    <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                                    </Label.GestureRecognizers>
-                                </Label>
-                            <Label
-                                Text="View All"
-                                FontFamily="Inter">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding GoToAllPizzasPageCommand}" CommandParameter="{x:Boolean False}" />
-                                </Label.GestureRecognizers>
-                            </Label>
+                    Orientation="Horizontal"
+                    Spacing="20"
+                    VerticalOptions="End">
+                    <Label FontFamily="Inter" Text="Refresh">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label FontFamily="Inter" Text="View All">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoToAllPizzasPageCommand}" CommandParameter="{x:Boolean False}" />
+                        </Label.GestureRecognizers>
+                    </Label>
                 </StackLayout>
             </Grid>
 
-            <CollectionView
-                x:Name="FoodList"
-                ItemsSource="{Binding FoodItems}">  
+            <CollectionView x:Name="FoodList" ItemsSource="{Binding FoodItems}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:FoodItem">
                         <Frame
@@ -164,40 +153,40 @@
                             Padding="0"
                             BackgroundColor="PaleGoldenrod"
                             CornerRadius="10"
-                            HorizontalOptions="FillAndExpand"
-                            HeightRequest="140">  
-                            <Grid 
-                                ColumnDefinitions="150, *" 
-                                RowDefinitions="*, auto, auto" 
-                                RowSpacing="5"
-                                Padding="15,20">
+                            HeightRequest="140"
+                            HorizontalOptions="FillAndExpand">
+                            <Grid
+                                Padding="15,20"
+                                ColumnDefinitions="150, *"
+                                RowDefinitions="*, auto, auto"
+                                RowSpacing="5">
                                 <Image
-                                    Grid.Column="0"
                                     Grid.RowSpan="3"
+                                    Grid.Column="0"
                                     HeightRequest="80"
                                     Source="{Binding Picture}"
                                     WidthRequest="130" />
                                 <Label
-                                    Grid.Column="1"
                                     Grid.Row="0"
+                                    Grid.Column="1"
                                     FontSize="12"
-                                    TextColor="Black"
                                     HorizontalOptions="Start"
                                     LineBreakMode="WordWrap"
-                                    Text="{Binding Name}" />        
+                                    Text="{Binding Name}"
+                                    TextColor="Black" />
                                 <Label
-                                    Grid.Column="1"
                                     Grid.Row="1"
+                                    Grid.Column="1"
                                     FontAttributes="Bold"
-                                    TextColor="Black"
                                     Text="{Binding Price, StringFormat='${0:N2}'}"
+                                    TextColor="Black"
                                     VerticalOptions="Center" />
                                 <Label
-                                    Grid.Column="1"
                                     Grid.Row="2"
+                                    Grid.Column="1"
+                                    HorizontalOptions="Start"
                                     Text="4*"
-                                    TextColor="Black"
-                                    HorizontalOptions="Start" />
+                                    TextColor="Black" />
                             </Grid>
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=GoToDetailsPageCommand}" CommandParameter="{Binding .}" />

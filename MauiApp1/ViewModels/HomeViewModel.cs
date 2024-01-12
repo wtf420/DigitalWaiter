@@ -11,10 +11,13 @@ namespace MauiApp1.ViewModels
     {
         private readonly FoodService _foodService;
         public bool refresh = true;
+        public string a { get; set; }
+
         public HomeViewModel(FoodService foodService)
         {
             refresh = true;
             _foodService = foodService;
+            a = "0";
         }
 
         public async void Update()
@@ -22,6 +25,8 @@ namespace MauiApp1.ViewModels
             await ServiceHelper.GetService<FoodService>().RefreshDataAsync();
             FoodItems = new(_foodService.GetAllFoodItems());
             OnPropertyChanged(nameof(FoodItems));
+            a = ServiceHelper.GetService<CartViewModel>().Items.Count.ToString();
+            OnPropertyChanged(nameof(a));
         }
 
         public ObservableCollection<FoodItem> FoodItems { get; set;}
@@ -46,6 +51,12 @@ namespace MauiApp1.ViewModels
                 [nameof(DetailsViewModel.FoodItem)] = foodItem
             };
             await Shell.Current.GoToAsync(nameof(DetailPage), animate: true, parameters);
+        }
+
+        [RelayCommand]
+        private async Task GoToCartViewPage()
+        {
+            await Shell.Current.GoToAsync(nameof(CartPage), animate: true);
         }
     }
 }
