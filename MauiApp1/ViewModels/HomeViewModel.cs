@@ -22,11 +22,11 @@ namespace MauiApp1.ViewModels
 
         public async void Update()
         {
+            a = ServiceHelper.GetService<CartViewModel>().Items.Count.ToString();
+            OnPropertyChanged(nameof(a));
             await ServiceHelper.GetService<FoodService>().RefreshDataAsync();
             FoodItems = new(_foodService.GetAllFoodItems());
             OnPropertyChanged(nameof(FoodItems));
-            a = ServiceHelper.GetService<CartViewModel>().Items.Count.ToString();
-            OnPropertyChanged(nameof(a));
         }
 
         public ObservableCollection<FoodItem> FoodItems { get; set;}
