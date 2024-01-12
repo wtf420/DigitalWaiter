@@ -44,7 +44,8 @@
                                 Padding="10"
                                 BackgroundColor="PaleGoldenrod"
                                 StrokeShape="RoundRectangle 10"
-                                StrokeThickness="0">
+                                StrokeThickness="0"
+                                MaximumHeightRequest="300">
                                 <Grid ColumnDefinitions="130, *">
                                     <Image Grid.Column="0" Source="{Binding Picture}"
                                            HeightRequest="80"/>
@@ -57,7 +58,7 @@
                                                TextColor="Black"
                                                FontFamily="Urbanist"
                                                FontAttributes="Bold"/>
-                                        <Grid ColumnDefinitions="*, *">
+                                        <Grid ColumnDefinitions="Auto, Auto">
                                             <Label
                                                 Grid.Column="0"
                                                 Text="{Binding Price, StringFormat='${0:N2}'}" 
